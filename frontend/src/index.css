@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'ModernEra';
+  src: url('/fonts/ModernEra.woff2') format('woff2'),
+       url('/fonts/ModernEra.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ModernEra';
+  src: url('/fonts/ModernEraBold.woff2') format('woff2'),
+       url('/fonts/ModernEraBold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TiemposHeadline';
+  src: url('/fonts/TiemposHeadlineRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TiemposHeadline';
+  src: url('/fonts/TiemposHeadlineSemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: bold;
+  font-display: swap;
+}
+
+:root {
+  /* Color Palette */
+  --midnight: #3E1768;
+  --aubergine: #67295F;
+  --lilac: #75457D;
+  --mauve: #9F81A5;
+  --mist: #C7C7E5;
+  --sand: #CCAC9F;
+  --pebble: #EEE1DB;
+  --stone: #484848;
+  --forest: #025656;
+  --kelp: #097270;
+  --coral: #D45847;
+  --bright-white: #FFFFFF;
+  --hblack: #1a1a1a;
+  --hwhite: #FFFEFD;
+
+  /* Sankey Diagram Colors */
+  --cyan: hsl(185, 70%, 50%);
+  --blue: hsl(203, 70%, 50%);
+  --light-blue: hsl(204, 68%, 62%);
+  --lime: hsl(80, 73.00%, 52.20%);
+  --light-lime: hsl(80, 73%, 64%);
+  --orange: hsl(28, 82.50%, 52.90%);
+  --light-orange: hsl(25, 86%, 64%);
+  --red: hsl(0, 71.30%, 57.60%);
+  --light-red: hsl(2, 70%, 67%);
+  --yellow: hsl(60, 92.00%, 43.90%);
+  --green: hsl(145, 97.20%, 41.80%);
+  --green-yellow: hsl(97, 80%, 60%);
+  --light-green: hsl(134, 57%, 63%);
+  --pink: hsl(331, 73%, 67%);
+
+  font-family: 'ModernEra', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: var(--hwhite);
+  }
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.module-enter {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.module-exit {
+  animation: fadeOut 0.4s ease-out forwards;
+}
