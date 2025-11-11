@@ -108,7 +108,7 @@ Generated with Hinge Stats: ${window.location.origin}`
                 <div className="text-[var(--stone)]">
                     View the code on {' '}
                     <a 
-                        href="https://github.com/haorang/hingedata" 
+                        href="https://github.com/haorang/hingereport" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-[var(--blue)] hover:text-[var(--cyan)] underline"
@@ -117,7 +117,7 @@ Generated with Hinge Stats: ${window.location.origin}`
                         GitHub
                     </a>
                 </div>
-                <div className="text-[var(--stone)]">
+                {/* <div className="text-[var(--stone)]">
                     Feel free to send feedback to{' '}
                     <a 
                         href="mailto:ztop2525@gmail.com" 
@@ -136,7 +136,7 @@ Generated with Hinge Stats: ${window.location.origin}`
                     >
                         twitter
                     </a>
-                </div>
+                </div> */}
             </div>
         </div>
     )

@@ -145,9 +145,9 @@ function Page() {
         {!dataProcessed && !isProcessing && (
         <div className={`px-4 max-w-7xl mx-auto mb-8 ${isFadingOut ? 'module-exit' : ''}`}>
           <div className="border-2 border-[var(--hblack)] rounded-lg p-4 text-center max-w-lg mx-auto">
-              This website generates stats and a few charts from your Hinge data. No data is saved and everything is processed in your browser.
+              This website generates stats and a few charts from your Hinge data obtained from the 'Download My Data' feature in Hinge. No data is saved and everything is processed in your browser.
               <br /><br />
-              To get started, follow the <a href="https://help.hinge.co/hc/en-us/articles/360011235813-How-do-I-request-a-copy-of-my-personal-data" target="_blank" className="text-[var(--blue)] underline hover:text-[var(--cyan)] cursor-pointer">instructions here</a> to download your data. Unzip the file and upload the matches.json file below.
+              To get started, upload your matches.json file below. If you need to get the data, follow the <a href="https://help.hinge.co/hc/en-us/articles/360011235813-How-do-I-request-a-copy-of-my-personal-data" target="_blank" className="text-[var(--blue)] underline hover:text-[var(--cyan)] cursor-pointer">instructions here</a> and unzip the downloaded file to obtain matches.json.
               <br /><br />
               If you want to try it out with some sample data,{' '}
               <button 
@@ -265,6 +265,8 @@ function Page() {
             <p className="text-sm text-gray-500">
               This website is not affiliated with, endorsed by, or associated with Hinge or Match Group, Inc.
             </p>
+
+            <p className="text-sm text-gray-500">Feel free to send any issues/feedback to <a href="mailto:ztop2525@gmail.com" className="text-[var(--blue)] hover:text-[var(--cyan)] underline">email</a> or <a href="https://x.com/Haorangggg" target="_blank" rel="noopener noreferrer" className="text-[var(--blue)] hover:text-[var(--cyan)] underline">twitter</a>.</p>
           </footer>
         )}
       </div>
