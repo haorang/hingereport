@@ -237,7 +237,7 @@ function Page() {
             </div>
             <div className="break-inside-avoid mb-6">
               <AnimatedModule delay={0.7}>
-                <Share stats={stats} handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} />
+                <Share stats={stats} handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} dateRange={dateRange} />
               </AnimatedModule>
             </div>
           </div>

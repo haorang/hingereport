@@ -34,7 +34,7 @@ function Upload({ handleFileUpload, dataProcessed }) {
     return (
         dataProcessed ? (
             <div
-            className={`border-2 border-dashed rounded-lg py-4 text-center transition-colors cursor-pointer ${dragActive ? "border-blue-500 bg-blue-100" : "border-gray-400 bg-gray-800"}`}
+            className={`border-2 border-dashed rounded-lg py-4 text-center transition-opacity duration-200 cursor-pointer border-[var(--hwhite)] bg-[var(--hblack)] hover:opacity-80 ${dragActive ? "opacity-80" : ""}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -52,7 +52,7 @@ function Upload({ handleFileUpload, dataProcessed }) {
         </div>
         ) : (
         <div
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${dragActive ? "border-blue-500 bg-blue-100" : "border-gray-400 bg-gray-800"}`}
+            className={`group border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 cursor-pointer border-[var(--hblack)] bg-[var(--hwhite)] hover:border-[var(--hwhite)] hover:bg-[var(--hblack)] ${dragActive ? "opacity-80" : ""}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -66,8 +66,8 @@ function Upload({ handleFileUpload, dataProcessed }) {
                 onChange={handleFileUpload}
                 style={{ display: "none" }}
             />
-            <p className="text-lg text-[var(--hwhite)] mb-2">Drag and drop <strong>matches.json</strong> file here</p>
-            <p className="text-sm text-[var(--hwhite)]">or click to choose a file</p>
+            <p className="text-lg text-[var(--hblack)] group-hover:text-[var(--hwhite)] transition-colors duration-200 mb-2">Drag and drop <strong>matches.json</strong> file here</p>
+            <p className="text-sm text-[var(--hblack)] group-hover:text-[var(--hwhite)] transition-colors duration-200">or click to choose a file</p>
         </div>
         )
     )

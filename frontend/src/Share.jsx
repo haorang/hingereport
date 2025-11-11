@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Upload from './Upload'
 
-function Share({ stats, handleFileUpload, dataProcessed }) {
+function Share({ stats, handleFileUpload, dataProcessed, dateRange}) {
     const [copied, setCopied] = useState(false)
 
     const generateSummary = () => {
@@ -12,7 +12,7 @@ function Share({ stats, handleFileUpload, dataProcessed }) {
             ? (stats.num_msgs.reduce((a, b) => a + b, 0) / stats.num_msgs.length).toFixed(1)
             : '0'
         
-        return `My Hinge Stats:
+        return `My Hinge Stats (${dateRange.start} - ${dateRange.end}):
 • ${stats.total_interactions} total interactions
 • ${stats.match} matches (${matchRate}% match rate from likes sent)
 • ${stats.incoming_like_match + stats.incoming_like_x} likes received
@@ -99,7 +99,7 @@ Generated with Hinge Stats: ${window.location.origin}`
                     </a>
                     {' '}or{' '}
                     <a 
-                        href="https://twitter.com/yourusername" 
+                        href="https://x.com/Haorangggg" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-[var(--blue)] hover:text-[var(--cyan)] underline"
