@@ -259,6 +259,7 @@ export function filterMatchesByDate(matchesData, startDate, endDate) {
 
         // If no timestamp found, exclude the row
         if (!timestamp) {
+            console.log(row)
             return false
         }
 

@@ -95,7 +95,7 @@ function SliderDateSelector({ earliestDate, latestDate, dateRange, setDateRange 
     return (
         <div className="w-full p-4 border-2 border-[var(--hblack)] rounded-lg bg-white">
             <div className="mb-4">
-                <h3 className="text-lg font-semibold text-[var(--hblack)] mb-2">Filter by Date Range</h3>
+                <h3 className="text-lg font-semibold text-[var(--hblack)] mb-2">Filter by date</h3>
                 <p className="text-sm text-[var(--stone)]">
                     {formatDate(valueToDate(startValue))} — {formatDate(valueToDate(endValue))}
                 </p>
@@ -143,16 +143,13 @@ function SliderDateSelector({ earliestDate, latestDate, dateRange, setDateRange 
                 />
             </div>
             
-            <div className="flex justify-between items-center text-xs text-[var(--stone)]">
-                <span>{formatDate(earliestDate)}</span>
+            <div className="flex justify-center items-center text-xs text-[var(--stone)]">
                 <button
                     onClick={handleReset}
-                    className="px-4 py-2 text-[var(--hblack)] bg-[var(--hwhite)] border-1 border-[var(--hblack)] rounded-lg text-sm font-medium hover:opacity-80 transition-opacity"
-                    
+                    className="group px-4 py-2 text-[var(--hblack)] bg-[var(--hwhite)] border border-[var(--hblack)] rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 hover:text-[var(--hwhite)] hover:bg-[var(--hblack)]"
                 >
                     Reset
                 </button>
-                <span>{formatDate(latestDate)}</span>
             </div>
         </div>
     )

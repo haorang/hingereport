@@ -32,6 +32,7 @@ function WordCloudViz({ wordFrequency }) {
     const [tooltip, setTooltip] = useState(null)
     const [filterCommon, setFilterCommon] = useState(false)
     const [containerWidth, setContainerWidth] = useState(800)
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
     const containerRef = useRef(null)
 
     useEffect(() => {
@@ -43,6 +44,15 @@ function WordCloudViz({ wordFrequency }) {
         updateWidth()
         window.addEventListener('resize', updateWidth)
         return () => window.removeEventListener('resize', updateWidth)
+    }, [])
+
+    // Track mouse position globally
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setMousePos({ x: e.clientX, y: e.clientY })
+        }
+        window.addEventListener('mousemove', handleMouseMove)
+        return () => window.removeEventListener('mousemove', handleMouseMove)
     }, [])
     
     // Transform word_frequency object into array format for react-d3-cloud
@@ -96,16 +106,11 @@ function WordCloudViz({ wordFrequency }) {
         return size
     }, [minValue, maxValue])
 
-    const onWordClick = useCallback((event, d) => {
-        console.log(`Word clicked: ${d.text} (${d.value} times)`)
-    }, [])
-
     const onWordMouseOver = useCallback((event, d) => {
+        // Use the tracked mouse position instead of event coordinates
         setTooltip({
             text: d.text,
-            value: d.value,
-            x: event.clientX,
-            y: event.clientY
+            value: d.value
         })
     }, [])
 
@@ -128,7 +133,6 @@ function WordCloudViz({ wordFrequency }) {
                     rotate={0}
                     padding={5}
                     fill={getColor}
-                    onWordClick={onWordClick}
                     onWordMouseOver={onWordMouseOver}
                     onWordMouseOut={onWordMouseOut}
                 />
@@ -136,8 +140,8 @@ function WordCloudViz({ wordFrequency }) {
                     <div
                         style={{
                             position: 'fixed',
-                            left: tooltip.x + 10,
-                            top: tooltip.y + 10,
+                            left: `${mousePos.x - 200}px`,
+                            top: `${mousePos.y - 340}px`,
                             background: '#000',
                             color: '#fff',
                             padding: '8px 12px',
@@ -148,7 +152,8 @@ function WordCloudViz({ wordFrequency }) {
                             fontFamily: 'ModernEra, Arial, sans-serif',
                             opacity: 1,
                             transition: 'opacity 0.2s ease-in-out',
-                            animation: 'fadeIn 0.2s ease-in-out'
+                            animation: 'fadeIn 0.2s ease-in-out',
+                            whiteSpace: 'nowrap'
                         }}
                     >
                         <div style={{ fontWeight: 600, marginBottom: '4px' }}>{tooltip.text}</div>

@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import Upload from './Upload'
 
+// Helper function to track events with Google Analytics
+const trackEvent = (eventName, eventParams = {}) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', eventName, eventParams);
+  }
+}
+
 function Share({ stats, handleFileUpload, dataProcessed, dateRange}) {
     const [copied, setCopied] = useState(false)
 
@@ -11,18 +18,25 @@ function Share({ stats, handleFileUpload, dataProcessed, dateRange}) {
         const avgMessages = stats.num_msgs && stats.num_msgs.length > 0
             ? (stats.num_msgs.reduce((a, b) => a + b, 0) / stats.num_msgs.length).toFixed(1)
             : '0'
-        
-        return `My Hinge Stats (${dateRange.start} - ${dateRange.end}):
-• ${stats.total_interactions} total interactions
-• ${stats.match} matches (${matchRate}% match rate from likes sent)
-• ${stats.incoming_like_match + stats.incoming_like_x} likes received
-• Average ${avgMessages} messages per chat
+        const maxMessages = stats.num_msgs && stats.num_msgs.length > 0
+            ? Math.max(...stats.num_msgs)
+            : '0'
+        const incomingMatchRate = stats.incoming_like_match / (stats.incoming_like_x + stats.incoming_like_match) * 100
+        return `My Hinge Stats (${(new Date(dateRange.start)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${(new Date(dateRange.end)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}:
+• ${stats.like} likes sent (${matchRate}% match rate from likes sent)
+• ${stats.incoming_like_match + stats.incoming_like_x} likes received (${incomingMatchRate.toFixed(1)}% match rate from likes received)
+• ${stats.match} matches
+• ${avgMessages} messages per chat
+• ${maxMessages} messages in longest chat
 
 Generated with Hinge Stats: ${window.location.origin}`
     }
 
     const handleCopy = async () => {
         const summary = generateSummary()
+        
+        // Track share/copy click
+        trackEvent('share_copy_clicked');
         
         try {
             await navigator.clipboard.writeText(summary)
@@ -45,6 +59,18 @@ Generated with Hinge Stats: ${window.location.origin}`
             }
             document.body.removeChild(textArea)
         }
+    }
+    
+    const handleGitHubClick = () => {
+        trackEvent('github_link_clicked');
+    }
+    
+    const handleEmailClick = () => {
+        trackEvent('email_link_clicked');
+    }
+    
+    const handleTwitterClick = () => {
+        trackEvent('twitter_link_clicked');
     }
 
     if (!stats) {
@@ -79,21 +105,24 @@ Generated with Hinge Stats: ${window.location.origin}`
             </div>
 
             <div className="space-y-2 text-sm">
-                <div>
+                <div className="text-[var(--stone)]">
+                    View the code on {' '}
                     <a 
-                        href="https://github.com/yourusername/hingedata" 
+                        href="https://github.com/haorang/hingedata" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-[var(--blue)] hover:text-[var(--cyan)] underline"
+                        onClick={handleGitHubClick}
                     >
-                        View the source code on GitHub
+                        GitHub
                     </a>
                 </div>
                 <div className="text-[var(--stone)]">
                     Feel free to send feedback to{' '}
                     <a 
-                        href="mailto:your-email@example.com" 
+                        href="mailto:ztop2525@gmail.com" 
                         className="text-[var(--blue)] hover:text-[var(--cyan)] underline"
+                        onClick={handleEmailClick}
                     >
                         email
                     </a>
@@ -103,8 +132,9 @@ Generated with Hinge Stats: ${window.location.origin}`
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-[var(--blue)] hover:text-[var(--cyan)] underline"
+                        onClick={handleTwitterClick}
                     >
-                        Twitter
+                        twitter
                     </a>
                 </div>
             </div>

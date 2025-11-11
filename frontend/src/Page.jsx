@@ -20,6 +20,13 @@ const AnimatedModule = ({ children, delay = 0 }) => (
   </div>
 )
 
+// Helper function to track events with Google Analytics
+const trackEvent = (eventName, eventParams = {}) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', eventName, eventParams);
+  }
+}
+
 function Page() {
     const [matches, setMatches] = useState([])
     const [dateRange, setDateRange] = useState(null)  // User's date filter
@@ -51,13 +58,22 @@ function Page() {
         setEarliestDate(fullStats.earliest_date)
         setLatestDate(fullStats.latest_date)
         
-        console.log('Matches loaded:', jsonData)
+        setDataProcessed(true)
+        setIsProcessing(false)
+        setIsFadingOut(false)
+        
+        // Track successful data processing
+        trackEvent('data_processed');
+        
     }
 
     // Process the matches and calculate stats
     const handleFileUpload = (event) => {
         const file = event.target.files[0]
         if (!file) return
+
+        // Track file upload attempt
+        trackEvent('file_upload_attempt');
 
         // Start fade-out animation
         setIsFadingOut(true)
@@ -74,12 +90,11 @@ function Page() {
                     // Simulate processing time for better UX
                     setTimeout(() => {
                         processLoadedData(jsonData)
-                        setDataProcessed(true)
-                        setIsProcessing(false)
-                        setIsFadingOut(false)
                     }, 300)
                 } catch (error) {
                     console.error('Error parsing JSON:', error)
+                    // Track error
+                    trackEvent('file_upload_error');
                     setIsProcessing(false)
                     setIsFadingOut(false)
                 }
@@ -90,6 +105,9 @@ function Page() {
 
     // Load sample data
     const loadSampleData = async () => {
+        // Track sample data load attempt
+        trackEvent('sample_data_clicked');
+        
         // Start fade-out animation
         setIsFadingOut(true)
         
@@ -107,12 +125,11 @@ function Page() {
                 // Simulate processing time for better UX
                 setTimeout(() => {
                     processLoadedData(jsonData)
-                    setDataProcessed(true)
-                    setIsProcessing(false)
-                    setIsFadingOut(false)
                 }, 300)
             } catch (error) {
                 console.error('Error loading sample data:', error)
+                // Track error
+                trackEvent('sample_data_error');
                 alert('Failed to load sample data. Please try uploading your own file.')
                 setIsProcessing(false)
                 setIsFadingOut(false)
@@ -121,9 +138,9 @@ function Page() {
     }
 
     return (
-      <div>
+      <div className="flex flex-col">
         <div className="font-[TiemposHeadline] text-4xl text-center mb-8">
-            Hinge Stats
+            The Hinge Report
         </div>
         {!dataProcessed && !isProcessing && (
         <div className={`px-4 max-w-7xl mx-auto mb-8 ${isFadingOut ? 'module-exit' : ''}`}>
@@ -157,8 +174,8 @@ function Page() {
         {dataProcessed && (
         <>
           {/* Desktop: Date selector at top, outside columns */}
-          <div className="hidden md:block px-4 max-w-7xl mx-auto mb-6">
-            <div className="max-w-lg mx-auto">
+          <div className="hidden md:block px-4 max-w-7xl mx-auto mb-6 min-w-lg">
+            <div className="max-w-2xl mx-auto">
               <AnimatedModule delay={0.05}>
                 <SliderDateSelector 
                   earliestDate={earliestDate} 
@@ -242,6 +259,13 @@ function Page() {
             </div>
           </div>
         </>
+        )}
+        {!isProcessing && (
+          <footer className="mt-auto py-8 px-4 text-center">
+            <p className="text-sm text-gray-500">
+              This website is not affiliated with, endorsed by, or associated with Hinge or Match Group, Inc.
+            </p>
+          </footer>
         )}
       </div>
     )
