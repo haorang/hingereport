@@ -24,8 +24,7 @@ const EXTENDED_STOP_WORDS = new Set([
     'they', 'them', 'their', 'theirs', 'themselves', 'it', 'its', 'itself',
     'this', 'that', 'these', 'those', 'so', 'such', 'no', 'nor', 'not', 'only',
     'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'could', 'may',
-    'might', 'must', 'shall', 'should', 'will', 'would', 'shall', 'should', 'will',
-    'would', 'shall', 'should', 'will', 'would', 'shall', 'should', 'will', 'would',
+    'might', 'must', 'shall', 'should', 'will', 'would', 'there', 'out', 'went',
 ])
 
 function WordCloudViz({ wordFrequency }) {
