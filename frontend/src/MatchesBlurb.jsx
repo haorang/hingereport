@@ -23,8 +23,8 @@ function MatchesBlurb({ stats, dateRange }) {
                     which led to <strong className="text-[var(--lime)]">{stats.incoming_like_match}</strong> ({incomingMatchRate.toFixed(2)}%) matches. 
                     <br /><br />
                     You sent <strong className="text-[var(--blue)]">{stats.like}</strong> likes 
-                    which led to <strong className="text-[var(--lime)]">{stats.match_from_like}</strong> ({matchRate.toFixed(2)}%)  matches. 
-                    Nice, that's about 1 in {matchOdds}, which is not bad for finding romantic fulfillment. 
+                    which led to <strong className="text-[var(--lime)]">{stats.match_from_like}</strong> ({matchRate.toFixed(2)}%)  matches, 
+                    or about 1 in {matchOdds}. 
 
                 </div>)
     }
