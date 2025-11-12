@@ -30,7 +30,7 @@ const trackEvent = (eventName, eventParams = {}) => {
 function Page() {
     const [matches, setMatches] = useState([])
     const [dateRange, setDateRange] = useState(null)  // User's date filter
-    const [timeZone, setTimeZone] = useState('America/New_York')
+    const [timeZone, setTimeZone] = useState('America/Los_Angeles')
     const [earliestDate, setEarliestDate] = useState(null)  // Set once on upload
     const [latestDate, setLatestDate] = useState(null)  // Set once on upload
     const [dataProcessed, setDataProcessed] = useState(false)
@@ -216,7 +216,7 @@ function Page() {
               <MessagesData stats={stats} />
             </AnimatedModule>
             <AnimatedModule delay={0.8}>
-              <Share stats={stats} handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} />
+              <Share stats={stats} handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} dateRange={dateRange} />
             </AnimatedModule>
           </div>
           

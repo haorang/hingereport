@@ -77,15 +77,15 @@ function BarChart({ stats, timeZone }) {
                         return ``
                     }
                 }}
-                axisTop={null}
+                axisBottom={null}
                 axisRight={null}
-                axisBottom={{
+                axisTop={{
                     tickSize: 5,
                     tickPadding: 5,
                     tickRotation: 0,
                     legend: 'Likes Sent',
                     legendPosition: 'middle',
-                    legendOffset: 32
+                    legendOffset: -40
                 }}
                 axisLeft={{
                     tickSize: 5,

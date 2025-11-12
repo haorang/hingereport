@@ -32,8 +32,8 @@ function WordCloudViz({ wordFrequency }) {
     const [tooltip, setTooltip] = useState(null)
     const [filterCommon, setFilterCommon] = useState(false)
     const [containerWidth, setContainerWidth] = useState(800)
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
     const containerRef = useRef(null)
+    const wordCloudContainerRef = useRef(null)
 
     useEffect(() => {
         const updateWidth = () => {
@@ -44,15 +44,6 @@ function WordCloudViz({ wordFrequency }) {
         updateWidth()
         window.addEventListener('resize', updateWidth)
         return () => window.removeEventListener('resize', updateWidth)
-    }, [])
-
-    // Track mouse position globally
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            setMousePos({ x: e.clientX, y: e.clientY })
-        }
-        window.addEventListener('mousemove', handleMouseMove)
-        return () => window.removeEventListener('mousemove', handleMouseMove)
     }, [])
     
     // Transform word_frequency object into array format for react-d3-cloud
@@ -107,11 +98,55 @@ function WordCloudViz({ wordFrequency }) {
     }, [minValue, maxValue])
 
     const onWordMouseOver = useCallback((event, d) => {
-        // Use the tracked mouse position instead of event coordinates
-        setTooltip({
-            text: d.text,
-            value: d.value
-        })
+        // Get mouse coordinates from the event
+        let clientX = 0
+        let clientY = 0
+        
+        // Try different ways to get mouse coordinates
+        if (event.sourceEvent) {
+            // D3 event with sourceEvent
+            clientX = event.sourceEvent.clientX || event.sourceEvent.pageX || 0
+            clientY = event.sourceEvent.clientY || event.sourceEvent.pageY || 0
+        } else if (event.clientX !== undefined) {
+            // Direct mouse event
+            clientX = event.clientX
+            clientY = event.clientY
+        } else if (event.originalEvent) {
+            // jQuery-style event
+            clientX = event.originalEvent.clientX || event.originalEvent.pageX || 0
+            clientY = event.originalEvent.clientY || event.originalEvent.pageY || 0
+        } else {
+            // Fallback: try to get from the target element
+            const target = event.target || event.currentTarget
+            if (target) {
+                const rect = target.getBoundingClientRect()
+                clientX = rect.left + rect.width / 2
+                clientY = rect.top
+            }
+        }
+        
+        // Convert to coordinates relative to the word cloud container
+        if (wordCloudContainerRef.current) {
+            const containerRect = wordCloudContainerRef.current.getBoundingClientRect()
+            const x = clientX - containerRect.left
+            const y = clientY - containerRect.top
+            
+            setTooltip({
+                text: d.text,
+                value: d.value,
+                x: x,
+                y: y
+            })
+        } else {
+            // Fallback to fixed positioning if container ref not available
+            setTooltip({
+                text: d.text,
+                value: d.value,
+                x: clientX,
+                y: clientY,
+                useFixed: true
+            })
+        }
     }, [])
 
     const onWordMouseOut = useCallback(() => {
@@ -121,7 +156,7 @@ function WordCloudViz({ wordFrequency }) {
     return (
         <div className="p-6" ref={containerRef}>
             
-            <div style={{ position: 'relative', width: '100%', minHeight: '500px' }}>
+            <div ref={wordCloudContainerRef} style={{ position: 'relative', width: '100%', minHeight: '500px' }}>
                 <WordCloud
                     data={data}
                     width={Math.max(300, containerWidth)}
@@ -136,12 +171,12 @@ function WordCloudViz({ wordFrequency }) {
                     onWordMouseOver={onWordMouseOver}
                     onWordMouseOut={onWordMouseOut}
                 />
-                {tooltip && (
+                {tooltip && tooltip.x !== undefined && tooltip.y !== undefined && (
                     <div
                         style={{
-                            position: 'fixed',
-                            left: `${mousePos.x - 200}px`,
-                            top: `${mousePos.y - 340}px`,
+                            position: tooltip.useFixed ? 'fixed' : 'absolute',
+                            left: tooltip.useFixed ? `${tooltip.x + 15}px` : `${tooltip.x + 15}px`,
+                            top: tooltip.useFixed ? `${tooltip.y + 80 }px` : `${tooltip.y + 80}px`,
                             background: '#000',
                             color: '#fff',
                             padding: '8px 12px',
@@ -151,9 +186,10 @@ function WordCloudViz({ wordFrequency }) {
                             zIndex: 1000,
                             fontFamily: 'ModernEra, Arial, sans-serif',
                             opacity: 1,
-                            transition: 'opacity 0.2s ease-in-out',
+                            transition: 'left 0.15s ease-out, top 0.15s ease-out, opacity 0.2s ease-in-out',
                             animation: 'fadeIn 0.2s ease-in-out',
-                            whiteSpace: 'nowrap'
+                            whiteSpace: 'nowrap',
+                            transform: tooltip.useFixed ? 'none' : 'translate(0, -100%)'
                         }}
                     >
                         <div style={{ fontWeight: 600, marginBottom: '4px' }}>{tooltip.text}</div>

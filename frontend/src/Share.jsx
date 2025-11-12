@@ -22,14 +22,21 @@ function Share({ stats, handleFileUpload, dataProcessed, dateRange}) {
             ? Math.max(...stats.num_msgs)
             : '0'
         const incomingMatchRate = stats.incoming_like_match / (stats.incoming_like_x + stats.incoming_like_match) * 100
-        return `My Hinge Stats (${(new Date(dateRange.start)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${(new Date(dateRange.end)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}:
+        
+        // Format date range if available
+        let dateRangeText = ''
+        if (dateRange && dateRange.start && dateRange.end) {
+            dateRangeText = `(${(new Date(dateRange.start)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - ${(new Date(dateRange.end)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}) `
+        }
+        
+        return `My Hinge Report ${dateRangeText}:
 • ${stats.like} likes sent (${matchRate}% match rate from likes sent)
 • ${stats.incoming_like_match + stats.incoming_like_x} likes received (${incomingMatchRate.toFixed(1)}% match rate from likes received)
 • ${stats.match} matches
 • ${avgMessages} messages per chat
 • ${maxMessages} messages in longest chat
 
-Generated with Hinge Stats: ${window.location.origin}`
+Generated with ${window.location.origin}`
     }
 
     const handleCopy = async () => {
