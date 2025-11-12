@@ -124,7 +124,7 @@ Generated with ${window.location.origin}`
                         GitHub
                     </a>
                 </div>
-                {/* <div className="text-[var(--stone)]">
+                <div className="text-[var(--stone)]">
                     Feel free to send feedback to{' '}
                     <a 
                         href="mailto:ztop2525@gmail.com" 
@@ -143,7 +143,7 @@ Generated with ${window.location.origin}`
                     >
                         twitter
                     </a>
-                </div> */}
+                </div>
             </div>
         </div>
     )

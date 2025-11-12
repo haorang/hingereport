@@ -37,12 +37,12 @@ function MessagesBlurb({ stats }) {
         return (
             <div>
                 <div className="mb-4 text-base text-[var(--hwhite)]">
-                    You didn't send anything for <strong className="text-[var(--red)]">{stats.matched_no_chat}</strong> matches, 
-                    but when you did you sent an average of <strong className="text-[var(--lime)]">{avg}</strong> messages with an average of <strong className="text-[var(--lime)]">{avg_words}</strong> words per message.<br /><br />
+                    You didn't send anything for <strong className="text-[var(--orange)]">{stats.matched_no_chat}</strong> matches, 
+                    but when you did you sent an average of <strong className="text-[var(--green)]">{avg}</strong> messages with an average of <strong className="text-[var(--green)]">{avg_words}</strong> words per message.<br /><br />
                     
-                    The most messages you sent in one chat was <strong className="text-[var(--orange)]">{max}</strong> and the most words you sent in one message was <strong className="text-[var(--orange)]">{max_words}</strong>.<br /><br />
+                    The most messages you sent in one chat was <strong className="text-[var(--blue)]">{max}</strong> and the most words you sent in one message was <strong className="text-[var(--blue)]">{max_words}</strong>.<br /><br />
                     
-                    Your most common chat length was <strong className="text-[var(--blue)]">{mode}</strong> messages.
+                    Your most common chat length was <strong className="text-[var(--cyan)]">{mode}</strong> messages.
                 </div>
             </div>
         )
