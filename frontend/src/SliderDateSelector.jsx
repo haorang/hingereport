@@ -95,7 +95,7 @@ function SliderDateSelector({ earliestDate, latestDate, dateRange, setDateRange 
     return (
         <div className="w-full p-4 border-2 border-[var(--hblack)] rounded-lg bg-white">
             <div className="mb-4">
-                <h3 className="text-lg font-semibold text-[var(--hblack)] mb-2">Filter by date</h3>
+                <h3 className="text-base font-regular text-[var(--hblack)] mb-2">Using data from</h3>
                 <p className="text-sm text-[var(--stone)]">
                     {formatDate(valueToDate(startValue))} — {formatDate(valueToDate(endValue))}
                 </p>
