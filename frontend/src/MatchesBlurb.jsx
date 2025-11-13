@@ -16,7 +16,7 @@ function MatchesBlurb({ stats, dateRange }) {
             <div>
                 {dateRange && dateRange.end && dateRange.start &&
                 (<div className="mb-4 text-base text-[var(--hwhite)]">
-                    You interacted with <strong className="text-[var(--blue)]">{stats.total_interactions}</strong> people about <strong className="">{matchesPerDay}</strong> per day, 
+                    You interacted with <strong className="text-[var(--blue)]">{stats.total_interactions}</strong> people, about <strong className="">{matchesPerDay}</strong> per day, 
                     matching with <strong className="text-[var(--lime)]">{stats.match} </strong> 
                     ({((stats.match / stats.total_interactions) * 100).toFixed(2)}%) of them and said you met with <strong className="text-[var(--pink)]">{stats.we_met} </strong> of them.<br /><br />
                     You received <strong className="text-[var(--cyan)]">{stats.incoming_like_x + stats.incoming_like_match}</strong> likes 

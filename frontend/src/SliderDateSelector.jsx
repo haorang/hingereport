@@ -101,7 +101,7 @@ function SliderDateSelector({ earliestDate, latestDate, dateRange, setDateRange 
                 </p>
             </div>
             
-            <div className="relative mb-8 py-3">
+            <div className="relative mb-3 py-3">
                 {/* Track background */}
                 <div className="absolute w-full h-2 bg-gray-200 rounded top-1/2 -translate-y-1/2"></div>
                 
