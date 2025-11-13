@@ -50,7 +50,7 @@ function Page() {
     }, [filteredMatches])
 
     // Helper function to process loaded JSON data
-    const processLoadedData = (jsonData) => {
+    const processLoadedData = (jsonData, source = 'unknown') => {
         setMatches(jsonData)
         
         // Calculate earliest and latest dates from full dataset (only once)
@@ -62,9 +62,14 @@ function Page() {
         setIsProcessing(false)
         setIsFadingOut(false)
         
-        // Track successful data processing
-        trackEvent('data_processed');
-        
+        // Track successful data processing based on source
+        if (source === 'file_upload') {
+            trackEvent('file_upload_processed');
+        } else if (source === 'sample_data') {
+            trackEvent('sample_data_processed');
+        } else {
+            trackEvent('data_processed');
+        }
     }
 
     // Process the matches and calculate stats
@@ -89,7 +94,7 @@ function Page() {
                     const jsonData = JSON.parse(e.target.result)
                     // Simulate processing time for better UX
                     setTimeout(() => {
-                        processLoadedData(jsonData)
+                        processLoadedData(jsonData, 'file_upload')
                     }, 300)
                 } catch (error) {
                     console.error('Error parsing JSON:', error)
@@ -124,7 +129,7 @@ function Page() {
                 const jsonData = await response.json()
                 // Simulate processing time for better UX
                 setTimeout(() => {
-                    processLoadedData(jsonData)
+                    processLoadedData(jsonData, 'sample_data')
                 }, 300)
             } catch (error) {
                 console.error('Error loading sample data:', error)
