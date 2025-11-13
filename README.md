@@ -1,23 +1,21 @@
-###
 
-- Basic matches, results counts 
-- Matches by Like time sent 
-- Matches by match time 
-- Likes succcess rate with or without message 
-- Stats over time (cut up total time period into 10 slices)
-- chat word map 
-- share to others 
+##hingereport.com
+Frontend only app to process and visualize Hinge personal data
 
-Json format:
-- you can only see if you remove
+```
+cd frontend
+npm run dev
+```
+
+matches.json format:
 List of interactions, one per person which can have:
     - 'match': you matched with someone  
         - 'timestamp': time of match
     - 'like': you sent a like
         - 'timestamp': time of like sent 
         - 'like':
-            -'timestamp': same as time above
-            -'comment': message you sent with like
+            - 'timestamp': same as time above
+            - 'comment': message you sent with like
     - 'chats': messages you sent 
             - 'body': the message
             - 'timestamp': time of sent message
