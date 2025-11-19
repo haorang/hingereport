@@ -154,14 +154,15 @@ function Page() {
               <br /><br />
               To get started, upload your matches.json file below. If you need to get the data, follow the <a href="https://help.hinge.co/hc/en-us/articles/360011235813-How-do-I-request-a-copy-of-my-personal-data" target="_blank" className="text-[var(--blue)] underline hover:text-[var(--cyan)] cursor-pointer">instructions here</a> and unzip the downloaded file to obtain matches.json.
               <br /><br />
-              If you want to try it out with some sample data,{' '}
-              <button 
-                  onClick={loadSampleData}
-                  className="text-[var(--blue)] underline hover:text-[var(--cyan)] cursor-pointer"
-              >
-                  click here
-              </button>
-              {' '}to use my data (no laughing and pointing). 
+              If you want to try it out with some sample data, you can use my data (no laughing and pointing):
+              <div className="mt-4">
+                <button
+                    onClick={loadSampleData}
+                    className="px-4 py-2 bg-[var(--lilac)] text-white rounded-md hover:bg-[var(--mauve)] transition-colors cursor-pointer text-sm"
+                >
+                    Load sample data
+                </button>
+              </div>
           </div>
         </div>
         )}
