@@ -1,3 +1,12 @@
+/**
+ * Checks if a we_met array indicates an actual meeting occurred
+ * @param {Array} weMet - Array of meeting records
+ * @returns {boolean} True if any entry has did_meet_subject === 'Yes'
+ */
+function didActuallyMeet(weMet) {
+    return Array.isArray(weMet) && weMet.some(entry => entry.did_meet_subject === 'Yes')
+}
+
 export function processMatches(matchesData) {
     if (!matchesData || !Array.isArray(matchesData) || matchesData.length === 0) {
         return {
@@ -57,7 +66,7 @@ export function processMatches(matchesData) {
         const keys = Object.keys(row)
         key_set.add(JSON.stringify(keys.sort()))
 
-        if ('we_met' in row) {
+        if (didActuallyMeet(row.we_met)) {
             we_met += 1
         }
         if ('match' in row) {

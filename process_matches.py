@@ -1,5 +1,9 @@
 import json
 
+def did_actually_meet(we_met):
+    """Check if a we_met array indicates an actual meeting occurred."""
+    return isinstance(we_met, list) and any(entry.get('did_meet_subject') == 'Yes' for entry in we_met)
+
 with open('matches.json', 'r') as f:
     matches_data= json.load(f)
 
@@ -21,7 +25,7 @@ num_msgs = []
 key_set = set()
 for row in matches_data:
     key_set.add(tuple(row.keys()))
-    if 'we_met' in row:
+    if did_actually_meet(row.get('we_met')):
         we_met += 1
     if 'match' in row:
         match += 1
