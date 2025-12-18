@@ -209,7 +209,7 @@ function Page() {
               padding: '0.2em 1em',
       
             }}>
-              {processedCount.toLocaleString()} {(processedCount === 1 ? 'report' : 'reports')} created!
+              {processedCount.toLocaleString()} {processedCount === 1 ? 'report' : 'reports'} created!
             </div>
           )}
         </div>
