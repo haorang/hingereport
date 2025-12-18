@@ -151,7 +151,11 @@
   }
 }
 
-.minecraft-pulse.module-enter {
+.fade-in-simple {
   opacity: 0;
+  animation: fadeInOpacity 0.6s ease-out forwards;
+}
+
+.fade-in-simple.minecraft-pulse {
   animation: fadeInOpacity 0.6s ease-out forwards, minecraftPulse 1s ease-in-out 0.6s infinite;
 }

@@ -195,7 +195,7 @@ function Page() {
         <div className={`relative px-4 max-w-7xl mx-auto ${isFadingOut ? 'module-exit' : ''}`}>
           <Upload handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} />
           {processedCount !== null && processedCount > 0 && (
-            <div className={`absolute minecraft-pulse module-enter ${isFadingOut ? 'module-exit' : ''}`} style={{
+            <div className={`absolute minecraft-pulse fade-in-simple ${isFadingOut ? 'module-exit' : ''}`} style={{
               bottom: '2em',
               right: '-0.5em',
               fontSize: '0.8rem',
