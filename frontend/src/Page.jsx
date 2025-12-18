@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Upload from './Upload'
 import { processMatches, filterMatchesByDate } from './utils/processMatches'
 import MatchesData from './MatchesData'
@@ -36,6 +36,7 @@ function Page() {
     const [dataProcessed, setDataProcessed] = useState(false)
     const [isProcessing, setIsProcessing] = useState(false)
     const [isFadingOut, setIsFadingOut] = useState(false)
+    const [processedCount, setProcessedCount] = useState(null)
 
     // Filter matches by date range
     const filteredMatches = useMemo(() => {
@@ -48,6 +49,30 @@ function Page() {
       if (!filteredMatches.length) return null
       return processMatches(filteredMatches)
     }, [filteredMatches])
+
+    // Fetch processed file count on component mount
+    useEffect(() => {
+      const fetchProcessedCount = async () => {
+        try {
+          const response = await fetch('/api/processed')
+          if (response.ok) {
+            const contentType = response.headers.get('content-type')
+            // Only parse as JSON if the content type is actually JSON
+            if (contentType && contentType.includes('application/json')) {
+              const data = await response.json()
+              if (data && typeof data.count === 'number') {
+                setProcessedCount(data.count)
+              }
+            }
+            // In dev mode with Vite, API routes don't work - silently fail
+          }
+        } catch (error) {
+          // Silently fail - API routes only work in production/Vercel
+          // In dev mode, this is expected
+        }
+      }
+      fetchProcessedCount()
+    }, [])
 
     // Helper function to process loaded JSON data
     const processLoadedData = (jsonData, source = 'unknown') => {
@@ -167,8 +192,23 @@ function Page() {
         </div>
         )}
         {!dataProcessed && !isProcessing && (
-        <div className={`px-4 max-w-7xl mx-auto ${isFadingOut ? 'module-exit' : ''}`}>
+        <div className={`relative px-4 max-w-7xl mx-auto ${isFadingOut ? 'module-exit' : ''}`}>
           <Upload handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} />
+          {processedCount !== null && processedCount > 0 && (
+            <div className={`absolute minecraft-pulse ${isFadingOut ? 'module-exit' : ''}`} style={{
+              bottom: '2em',
+              right: '0em',
+              fontSize: '0.8rem',
+              fontFamily: 'ModernEra',
+              color: 'var(--coral)',
+              lineHeight: '1',
+              whiteSpace: 'nowrap',
+              fontWeight: 'bold',
+              letterSpacing: '0.05em'
+            }}>
+              {processedCount.toLocaleString()} {processedCount === 1 ? 'report' : 'reports'} created!
+            </div>
+          )}
         </div>
         )}
         {isProcessing && (

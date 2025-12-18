@@ -127,3 +127,17 @@
 .module-exit {
   animation: fadeOut 0.4s ease-out forwards;
 }
+
+@keyframes minecraftPulse {
+  0%, 100% {
+    transform: rotate(-20deg) scale(1);
+  }
+  50% {
+    transform: rotate(-20deg) scale(1.1);
+  }
+}
+
+.minecraft-pulse {
+  animation: minecraftPulse 1s ease-in-out infinite;
+  transform-origin: bottom center;
+}
