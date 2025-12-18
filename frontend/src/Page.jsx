@@ -197,16 +197,19 @@ function Page() {
           {processedCount !== null && processedCount > 0 && (
             <div className={`absolute minecraft-pulse ${isFadingOut ? 'module-exit' : ''}`} style={{
               bottom: '2em',
-              right: '0em',
+              right: '-0.5em',
               fontSize: '0.8rem',
               fontFamily: 'ModernEra',
               color: 'var(--coral)',
               lineHeight: '1',
               whiteSpace: 'nowrap',
               fontWeight: 'bold',
-              letterSpacing: '0.05em'
+              letterSpacing: '0.05em',
+              backgroundColor: 'var(--hwhite)',
+              padding: '0.2em 1em',
+      
             }}>
-              {processedCount.toLocaleString()} {processedCount === 1 ? 'report' : 'reports'} created!
+              {processedCount.toLocaleString()} {(processedCount === 1 ? 'report' : 'reports')} created!
             </div>
           )}
         </div>
