@@ -315,7 +315,7 @@ function Page() {
               This website is not affiliated with, endorsed by, or associated with Hinge or Match Group, Inc.
             </p>
 
-            {!dataProcessed && <p className="text-sm text-gray-500">Feel free to send any issues/feedback to <a href="https://github.com/haorang/hingereport" target="_blank" rel="noopener noreferrer" className="text-[var(--blue)] hover:text-[var(--cyan)] underline">github</a>, <a href="mailto:ztop2525@gmail.com" className="text-[var(--blue)] hover:text-[var(--cyan)] underline">email</a> or <a href="https://x.com/Haorangggg" target="_blank" rel="noopener noreferrer" className="text-[var(--blue)] hover:text-[var(--cyan)] underline">twitter</a>.</p>}
+            {!dataProcessed && <p className="text-sm text-gray-500">Feel free to send any issues/feedback to <a href="https://github.com/haorang/hingereport" target="_blank" rel="noopener noreferrer" className="text-[var(--blue)] hover:text-[var(--cyan)] underline" onClick={() => trackEvent('github_link_clicked')}>github</a>, <a href="mailto:ztop2525@gmail.com" className="text-[var(--blue)] hover:text-[var(--cyan)] underline" onClick={() => trackEvent('email_link_clicked')}>email</a> or <a href="https://x.com/Haorangggg" target="_blank" rel="noopener noreferrer" className="text-[var(--blue)] hover:text-[var(--cyan)] underline" onClick={() => trackEvent('twitter_link_clicked')}>twitter</a>.</p>}
           </footer>
         )}
       </div>
