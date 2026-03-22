@@ -52,7 +52,7 @@ function Upload({ handleFileUpload, dataProcessed }) {
         </div>
         ) : (
         <div
-            className={`group border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 cursor-pointer border-[var(--hblack)] bg-[var(--hwhite)] hover:border-[var(--hwhite)] hover:bg-[var(--hblack)] ${dragActive ? "opacity-80" : ""}`}
+            className={`group border-2 border-dashed rounded-lg p-8 text-center transition-all duration-200 cursor-pointer border-[var(--hblack)] bg-[var(--hwhite)] hover:border-[var(--hwhite)] hover:bg-[var(--hblack)] dark:border-[var(--hwhite)] dark:bg-[var(--page-bg)] dark:hover:border-[var(--hblack)] dark:hover:bg-[var(--hwhite)] ${dragActive ? "opacity-80" : ""}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -66,8 +66,8 @@ function Upload({ handleFileUpload, dataProcessed }) {
                 onChange={handleFileUpload}
                 style={{ display: "none" }}
             />
-            <p className="text-lg text-[var(--hblack)] group-hover:text-[var(--hwhite)] transition-colors duration-200 mb-2">Drag and drop <strong>matches.json</strong> file here</p>
-            <p className="text-sm text-[var(--hblack)] group-hover:text-[var(--hwhite)] transition-colors duration-200">or click to choose a file</p>
+            <p className="text-lg text-[var(--hblack)] group-hover:text-[var(--hwhite)] dark:text-[var(--hwhite)] dark:group-hover:text-[var(--hblack)] transition-colors duration-200 mb-2">Drag and drop <strong>matches.json</strong> file here</p>
+            <p className="text-sm text-[var(--hblack)] group-hover:text-[var(--hwhite)] dark:text-[var(--hwhite)] dark:group-hover:text-[var(--hblack)] transition-colors duration-200">or click to choose a file</p>
         </div>
         )
     )

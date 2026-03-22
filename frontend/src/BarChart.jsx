@@ -1,6 +1,6 @@
 import { ResponsiveBar } from '@nivo/bar'
 
-function BarChart({ stats, timeZone }) {
+function BarChart({ stats, timeZone, isDark }) {
     if (!stats || !stats.likes_by_hr || !stats.matches_by_like_hr) {
         return <div>No data available</div>
     }
@@ -47,10 +47,19 @@ function BarChart({ stats, timeZone }) {
     // Sort by adjusted hour to display in correct order (reverse for horizontal layout)
     data.sort((a, b) => b.i - a.i)
 
+    const textColor = isDark ? '#FFFEFD' : '#1a1a1a'
+
     return (
         <div style={{ height: '600px', width: '100%' }}>
             <ResponsiveBar
                 data={data}
+                theme={{
+                    axis: {
+                        ticks: { text: { fill: textColor } },
+                        legend: { text: { fill: textColor } },
+                    },
+                    labels: { text: { fill: textColor } },
+                }}
                 keys={['Sent like and matched', 'Sent like and no match']}
                 indexBy="hour"
                 layout="horizontal"

@@ -1,6 +1,6 @@
 import BarChart from './BarChart'
 
-function LikesData({ stats, timeZone, setTimeZone }) {
+function LikesData({ stats, timeZone, setTimeZone, isDark }) {
     const timezones = [
         { value: 'Pacific/Honolulu', label: 'Hawaii (HST)' },
         { value: 'America/Anchorage', label: 'Alaska (AKT)' },
@@ -17,14 +17,14 @@ function LikesData({ stats, timeZone, setTimeZone }) {
     ]
 
     return (
-        <div className="w-full border-2 border-[var(--hblack)] rounded-lg">
-            <div className="p-4 border-[var(--hblack)]">
+        <div className="w-full border-2 border-[var(--hblack)] dark:border-[var(--hwhite)] dark:bg-[var(--hblack)] rounded-lg">
+            <div className="p-4 border-[var(--hblack)] dark:border-[var(--hwhite)]">
                 <label className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-[var(--hblack)]">Timezone:</span>
-                    <select 
+                    <span className="text-sm font-semibold text-[var(--hblack)] dark:text-[var(--hwhite)]">Timezone:</span>
+                    <select
                         value={timeZone}
                         onChange={(e) => setTimeZone(e.target.value)}
-                        className="px-3 py-1 border border-[var(--hblack)] rounded bg-white text-[var(--hblack)] text-sm"
+                        className="px-3 py-1 border border-[var(--hblack)] dark:border-[var(--hwhite)] rounded bg-white dark:bg-[var(--hblack)] text-[var(--hblack)] dark:text-[var(--hwhite)] text-sm"
                     >
                         {timezones.map((tz) => (
                             <option key={tz.value} value={tz.value}>
@@ -34,7 +34,7 @@ function LikesData({ stats, timeZone, setTimeZone }) {
                     </select>
                 </label>
             </div>
-            <BarChart stats={stats} timeZone={timeZone} />  
+            <BarChart stats={stats} timeZone={timeZone} isDark={isDark} />
         </div>
     )
 }

@@ -38,6 +38,21 @@ function Page() {
     const [isFadingOut, setIsFadingOut] = useState(false)
     const [processedCount, setProcessedCount] = useState(null)
 
+    const [isDark, setIsDark] = useState(() => {
+        const saved = localStorage.getItem('darkMode')
+        if (saved !== null) return saved === 'true'
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+    })
+
+    useEffect(() => {
+        if (isDark) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+        localStorage.setItem('darkMode', isDark)
+    }, [isDark])
+
     // Filter matches by date range
     const filteredMatches = useMemo(() => {
       if (!dateRange || !dateRange.start || !dateRange.end) return matches
@@ -169,12 +184,35 @@ function Page() {
 
     return (
       <div className="flex flex-col">
-        <div className="font-[TiemposHeadline] text-4xl text-center mb-8">
+        <div className="relative font-[TiemposHeadline] text-4xl text-center mb-8">
             The Hinge Report
+            <button
+                onClick={() => setIsDark(d => !d)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-[var(--hblack)] dark:text-[var(--hwhite)] hover:opacity-50 transition-opacity"
+                title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+                {isDark ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <line x1="12" y1="2" x2="12" y2="4"/>
+                        <line x1="12" y1="20" x2="12" y2="22"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="2" y1="12" x2="4" y2="12"/>
+                        <line x1="20" y1="12" x2="22" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                )}
+            </button>
         </div>
         {!dataProcessed && !isProcessing && (
         <div className={`px-4 max-w-7xl mx-auto mb-8 ${isFadingOut ? 'module-exit' : ''}`}>
-          <div className="border-2 border-[var(--hblack)] rounded-lg p-4 text-center max-w-lg mx-auto">
+          <div className="border-2 border-[var(--hblack)] dark:border-white dark:bg-[var(--hblack)] rounded-lg p-4 text-center max-w-lg mx-auto">
               This website generates stats and a few charts from your Hinge data obtained from the 'Download My Data' feature in Hinge. No data is saved and everything is processed in your browser.
               <br /><br />
               To get started, upload your matches.json file below. If you need to get the data, follow the <a href="https://help.hinge.co/hc/en-us/articles/360011235813-How-do-I-request-a-copy-of-my-personal-data" target="_blank" className="text-[var(--blue)] underline hover:text-[var(--cyan)] cursor-pointer">instructions here</a> and unzip the downloaded file to obtain matches.json.
@@ -205,7 +243,7 @@ function Page() {
               whiteSpace: 'nowrap',
               fontWeight: 'bold',
               letterSpacing: '0.05em',
-              backgroundColor: 'var(--hwhite)',
+              backgroundColor: 'var(--page-bg)',
               padding: '0.2em 1em',
       
             }}>
@@ -250,19 +288,19 @@ function Page() {
               <MatchesBlurb stats={stats} dateRange={dateRange} />
             </AnimatedModule>
             <AnimatedModule delay={0.3}>
-              <MatchesData stats={stats} />
+              <MatchesData stats={stats} isDark={isDark} />
             </AnimatedModule>
             <AnimatedModule delay={0.4}>
               <LikesBlurb stats={stats} timeZone={timeZone} />
             </AnimatedModule>
             <AnimatedModule delay={0.5}>
-              <LikesData stats={stats} timeZone={timeZone} setTimeZone={setTimeZone} />
+              <LikesData stats={stats} timeZone={timeZone} setTimeZone={setTimeZone} isDark={isDark} />
             </AnimatedModule>
             <AnimatedModule delay={0.6}>
               <MessagesBlurb stats={stats} />
             </AnimatedModule>
             <AnimatedModule delay={0.7}>
-              <MessagesData stats={stats} />
+              <MessagesData stats={stats} isDark={isDark} />
             </AnimatedModule>
             <AnimatedModule delay={0.8}>
               <Share stats={stats} handleFileUpload={handleFileUpload} dataProcessed={dataProcessed} dateRange={dateRange} />
@@ -273,7 +311,7 @@ function Page() {
           <div className="hidden md:block md:columns-2 md:column-gap-6 px-4 max-w-5xl mx-auto">
             <div className="break-inside-avoid mb-6">
               <AnimatedModule delay={0.1}>
-                <MatchesData stats={stats} />
+                <MatchesData stats={stats} isDark={isDark} />
               </AnimatedModule>
             </div>
             <div className="break-inside-avoid mb-6">
@@ -283,7 +321,7 @@ function Page() {
             </div>
             <div className="break-inside-avoid mb-6">
               <AnimatedModule delay={0.3}>
-                <MessagesData stats={stats} />
+                <MessagesData stats={stats} isDark={isDark} />
               </AnimatedModule>
             </div>
             <div className="break-inside-avoid mb-6">
@@ -293,7 +331,7 @@ function Page() {
             </div>
             <div className="break-inside-avoid mb-6">
               <AnimatedModule delay={0.5}>
-                <LikesData stats={stats} timeZone={timeZone} setTimeZone={setTimeZone} />
+                <LikesData stats={stats} timeZone={timeZone} setTimeZone={setTimeZone} isDark={isDark} />
               </AnimatedModule>
             </div>
             <div className="break-inside-avoid mb-6">

@@ -98,7 +98,7 @@ function statsToSankeyData(stats) {
 }
 
 // Create custom label component factory that has access to stats
-function createSankeyLabelComponent(stats) {
+function createSankeyLabelComponent(stats, isDark) {
     // Map node ID patterns to display names and values
     const nodeValueMap = {
         'Like received': stats.incoming_like_match + stats.incoming_like_x,
@@ -130,7 +130,7 @@ function createSankeyLabelComponent(stats) {
                 textAnchor="middle"
                 dominantBaseline="middle"
                 style={{
-                    fill: '#333',
+                    fill: isDark ? '#FFFEFD' : '#333',
                     fontSize: '11px',
                     fontWeight: 500,
                     pointerEvents: 'none',
@@ -215,14 +215,13 @@ function createSankeyLinkTooltipComponent() {
     }
 }
 
-function SankeyDiagram({ stats }) {
+function SankeyDiagram({ stats, isDark }) {
     if (!stats) return <div>No data</div>
-    
     const sankeyData = statsToSankeyData(stats)
-    const SankeyLabelComponent = createSankeyLabelComponent(stats)
+    const SankeyLabelComponent = createSankeyLabelComponent(stats, isDark)
     const SankeyTooltipComponent = createSankeyTooltipComponent(stats)
     const SankeyLinkTooltipComponent = createSankeyLinkTooltipComponent()
-    
+
     return (
             <div className="" style={{ width: '100%', height: '400px' }}>
                 <ResponsiveSankey
@@ -239,8 +238,9 @@ function SankeyDiagram({ stats }) {
                     nodeBorderWidth={0}
                     // nodeBorderColor={{ from: 'color', modifiers: [['darker', 0.8]] }}
                     nodeBorderRadius={3}
-                    linkOpacity={0.5}
-                    linkHoverOthersOpacity={0.1}
+                    linkOpacity={isDark ? 0.9 : 0.5}
+                    linkHoverOthersOpacity={isDark ? 0.3 : 0.1}
+                    linkBlendMode={isDark ? 'normal' : 'multiply'}
                     linkContract={3}
                     enableLinkGradient={true}
                     labelPosition="inside"

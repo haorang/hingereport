@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import SankeyDiagram from './SankeyDiagram'
-function MatchesData({ stats }) {
+function MatchesData({ stats, isDark }) {
 
     const getBlurb = (stats) => {
 
@@ -28,8 +28,8 @@ function MatchesData({ stats }) {
     }
 
     return (
-        <div className="w-full border-2 border-[var(--hblack)] rounded-lg">
-            <SankeyDiagram stats={stats} />
+        <div className="w-full border-2 border-[var(--hblack)] dark:border-[var(--hwhite)] dark:bg-[var(--hblack)] rounded-lg">
+            <SankeyDiagram stats={stats} isDark={isDark} />
         </div>
     )
 }

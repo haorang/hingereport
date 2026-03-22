@@ -2,11 +2,17 @@ import WordCloud from 'react-d3-cloud'
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 
 // Define colors outside component to avoid recreation
-const COLORS = [
+const COLORS_LIGHT = [
     'var(--blue)',
     'var(--green)',
     'var(--red)',
     'var(--hblack)',
+]
+const COLORS_DARK = [
+    'var(--blue)',
+    'var(--green)',
+    'var(--red)',
+    'var(--hwhite)',
 ]
 
 // Extended stop words for filtering
@@ -27,7 +33,7 @@ const EXTENDED_STOP_WORDS = new Set([
     'might', 'must', 'shall', 'should', 'will', 'would', 'there', 'out', 'went',
 ])
 
-function WordCloudViz({ wordFrequency }) {
+function WordCloudViz({ wordFrequency, isDark }) {
     const [tooltip, setTooltip] = useState(null)
     const [filterCommon, setFilterCommon] = useState(false)
     const [containerWidth, setContainerWidth] = useState(800)
@@ -66,9 +72,11 @@ function WordCloudViz({ wordFrequency }) {
         return <div className="p-4">No word data available</div>
     }
 
+    const COLORS = isDark ? COLORS_DARK : COLORS_LIGHT
+
     const getColor = useCallback((d, index) => {
         return COLORS[index % COLORS.length]
-    }, [])
+    }, [isDark])
 
     // Calculate min and max values for scaling
     const { minValue, maxValue } = useMemo(() => {
