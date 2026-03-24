@@ -254,8 +254,8 @@ function Page() {
         )}
         {isProcessing && (
         <div className="px-4 max-w-7xl mx-auto text-center py-12 module-enter" style={{ animationDelay: '0s' }}>
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--hblack)]"></div>
-          <p className="mt-4 text-[var(--stone)]">Processing your data...</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--hblack)] dark:border-[var(--hwhite)]"></div>
+          <p className="mt-4 text-[var(--stone)] dark:text-[var(--mist)]">Processing your data...</p>
         </div>
         )}
         {dataProcessed && (
